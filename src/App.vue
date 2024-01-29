@@ -1,13 +1,12 @@
 <template>
-  <HelloWorld msg="You did it!" />
-  {{ msg }}
+  <OrderBook v-if="msg && msg.data" :data="msg.data[0]" />
 </template>
 
 <script setup>
 import { storeToRefs } from 'pinia'
-import HelloWorld from './components/HelloWorld.vue'
 import { useWsStore } from '@/stores/ws'
 import { initWebsocket } from './utils/ws.js'
+import OrderBook from './components/OrderBook.vue'
 initWebsocket({
   id: 1,
   method: 'subscribe',
@@ -20,7 +19,7 @@ const wsStore = useWsStore()
 const { msg } = storeToRefs(wsStore)
 </script>
 
-<style scoped>
+<style>
 #app {
   width: 100%;
   padding: 0;

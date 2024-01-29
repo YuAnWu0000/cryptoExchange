@@ -8,25 +8,27 @@ export const initWebsocket = (FirstMsg) => {
   const wsStore = useWsStore()
 
   socket.onopen = () => {
-    console.log('websocket connected!!')
+    console.log('websocket connected!')
   }
   socket.onmessage = (msg) => {
-    let { data } = msg
-    console.log('onmessage', data)
+    let data = JSON.parse(msg.data)
+    console.log('onmessage: ', data)
     // check heartbeat
-    if (data.methods === 'public/heartbeat')
-      sendSocketMessage(
-        JSON.stringify({
-          id: data.id,
-          method: 'public/respond-heartbeat'
-        })
-      )
-    else {
-      wsStore.setMsg(data)
+    if (data.method === 'public/heartbeat') {
+      sendSocketMessage({
+        id: data.id,
+        method: 'public/respond-heartbeat'
+      })
+    } else {
+      wsStore.setMsg(data.result)
     }
   }
   socket.onerror = (err) => {
     console.log('error', err)
+  }
+  socket.onclose = (msg) => {
+    console.log('Socket onclose! Reconnecting...', msg)
+    initWebsocket(FirstMsg)
   }
   // By Crypto.com doc
   // We recommend adding a 1-second sleep after establishing the websocket connection, and before requests are sent.
@@ -35,7 +37,10 @@ export const initWebsocket = (FirstMsg) => {
   }, 1000)
 }
 export const sendSocketMessage = (msg) => {
-  if (socket.readyState === socketReadyStateEnum.OPEN) socket.send(JSON.stringify(msg))
+  if (socket.readyState === socketReadyStateEnum.OPEN) {
+    socket.send(JSON.stringify(msg))
+    console.log('message sent: ', JSON.stringify(msg))
+  }
 }
 export const socketReadyStateEnum = {
   CONNECTING: 0, // 'Socket has been created. The connection is not yet open.'
