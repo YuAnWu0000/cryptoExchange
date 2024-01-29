@@ -1,6 +1,6 @@
 # cryptoExchange
 
-Order book function in crypto exchange (crypto.com API + websokcet)
+Order book function in crypto exchange (integrate crypto.com API by websocket.)
 
 ## Recommended IDE Setup
 

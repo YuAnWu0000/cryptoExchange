@@ -1,47 +1,31 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <HelloWorld msg="You did it!" />
+  {{ msg }}
 </template>
 
+<script setup>
+import { storeToRefs } from 'pinia'
+import HelloWorld from './components/HelloWorld.vue'
+import { useWsStore } from '@/stores/ws'
+import { initWebsocket } from './utils/ws.js'
+initWebsocket({
+  id: 1,
+  method: 'subscribe',
+  params: {
+    channels: ['book.BTCUSD-PERP.10']
+  },
+  nonce: 1654784123465
+})
+const wsStore = useWsStore()
+const { msg } = storeToRefs(wsStore)
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+#app {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
 }
 </style>
