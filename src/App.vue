@@ -1,22 +1,19 @@
 <template>
-  <OrderBook v-if="msg && msg.data" :data="msg.data[0]" />
+  <OrderBook symbol="BTCUSD-PERP" />
+  <OrderBook symbol="ETHUSD-PERP" />
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia'
-import { useWsStore } from '@/stores/ws'
-import { initWebsocket } from './utils/ws.js'
+import { initWebsocket } from '@/utils/ws'
 import OrderBook from './components/OrderBook.vue'
 initWebsocket({
-  id: 1,
+  id: 5566,
   method: 'subscribe',
   params: {
-    channels: ['book.BTCUSD-PERP.10']
+    channels: ['book.BTCUSD-PERP.10', 'book.ETHUSD-PERP.10']
   },
   nonce: 1654784123465
 })
-const wsStore = useWsStore()
-const { msg } = storeToRefs(wsStore)
 </script>
 
 <style>

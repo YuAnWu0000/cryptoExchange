@@ -1,11 +1,10 @@
-import { useWsStore } from '@/stores/ws'
+import { useOrderBookStore } from '@/stores/orderBook'
 
 const wsUrl = 'wss://stream.crypto.com/exchange/v1/market'
 let socket = null
 
 export const initWebsocket = (FirstMsg) => {
   socket = new WebSocket(wsUrl)
-  const wsStore = useWsStore()
 
   socket.onopen = () => {
     console.log('websocket connected!')
@@ -13,21 +12,48 @@ export const initWebsocket = (FirstMsg) => {
   socket.onmessage = (msg) => {
     let data = JSON.parse(msg.data)
     console.log('onmessage: ', data)
+    // error handling
+    if (data.code !== 0) {
+      console.log(
+        'Crypto.com expected error: ',
+        CryptoDotComErrorCode[data.code] ? CryptoDotComErrorCode[data.code] : data.message
+      )
+      return
+    }
+    // ignore first confirmation response by crypto.com
+    if (data.id === FirstMsg.id) return
     // check heartbeat
     if (data.method === 'public/heartbeat') {
       sendSocketMessage({
         id: data.id,
         method: 'public/respond-heartbeat'
       })
-    } else {
-      wsStore.setMsg(data.result)
+      return
+    }
+    // all the successful responses would be id: -1
+    if (data.id !== -1) {
+      console.log('----------------unhandling error----------------', data)
+      return
+    }
+    // pass result to store
+    let result = data.result
+    switch (result.channel) {
+      case 'book': {
+        const orderBookStore = useOrderBookStore()
+        orderBookStore.setOrderBook(result.instrument_name, result.data[0])
+        break
+      }
+      default:
+        console.log('--------------channel not found!!--------------')
     }
   }
   socket.onerror = (err) => {
     console.log('error', err)
   }
-  socket.onclose = (msg) => {
-    console.log('Socket onclose! Reconnecting...', msg)
+  socket.onclose = (event) => {
+    console.log(
+      `Socket onclose due to ${CryptoDotComErrorCode[event.code] ? CryptoDotComErrorCode[event.code] : event.reason}! Reconnecting...`
+    )
     initWebsocket(FirstMsg)
   }
   // By Crypto.com doc
@@ -42,13 +68,13 @@ export const sendSocketMessage = (msg) => {
     console.log('message sent: ', JSON.stringify(msg))
   }
 }
-export const socketReadyStateEnum = {
+const socketReadyStateEnum = {
   CONNECTING: 0, // 'Socket has been created. The connection is not yet open.'
   OPEN: 1, // 'The connection is open and ready to communicate.'
   CLOSING: 2, // 'The connection is in the process of closing.'
   CLOSED: 3 // "The connection is closed or couldn't be opened."
 }
-export const CryptoDotComErrorCode = {
+const CryptoDotComErrorCode = {
   1000: "Normal disconnection by server, usually when the heartbeat isn't handled properly",
   1006: 'Abnormal disconnection',
   1013: 'Server restarting -- try again later'
