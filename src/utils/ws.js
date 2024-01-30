@@ -1,9 +1,10 @@
 import { useOrderBookStore } from '@/stores/orderBook'
+import { useCandleStore } from '@/stores/candles'
 
 const wsUrl = 'wss://stream.crypto.com/exchange/v1/market'
 let socket = null
 
-export const initWebsocket = (FirstMsg) => {
+export const initWebsocket = (firstMsg) => {
   socket = new WebSocket(wsUrl)
 
   socket.onopen = () => {
@@ -11,7 +12,7 @@ export const initWebsocket = (FirstMsg) => {
   }
   socket.onmessage = (msg) => {
     let data = JSON.parse(msg.data)
-    console.log('onmessage: ', data)
+    // console.log('onmessage: ', data)
     // error handling
     if (data.code !== 0) {
       console.log(
@@ -20,8 +21,6 @@ export const initWebsocket = (FirstMsg) => {
       )
       return
     }
-    // ignore first confirmation response by crypto.com
-    if (data.id === FirstMsg.id) return
     // check heartbeat
     if (data.method === 'public/heartbeat') {
       sendSocketMessage({
@@ -30,17 +29,28 @@ export const initWebsocket = (FirstMsg) => {
       })
       return
     }
-    // all the successful responses would be id: -1
-    if (data.id !== -1) {
+    // all the successful responses would be id: firstMsg.id(first response) or -1(updated)
+    if (data.id !== -1 && data.id !== firstMsg.id) {
       console.log('----------------unhandling error----------------', data)
       return
     }
+    if (!data.result) return
     // pass result to store
     let result = data.result
     switch (result.channel) {
       case 'book': {
         const orderBookStore = useOrderBookStore()
         orderBookStore.setOrderBook(result.instrument_name, result.data[0])
+        break
+      }
+      case 'candlestick': {
+        const candleStore = useCandleStore()
+        // pass historical candle data into store after getting first response
+        if (data.id === firstMsg.id) {
+          candleStore.setCandles(result.instrument_name, result.data)
+          return
+        }
+        candleStore.updateCandles(result.data)
         break
       }
       default:
@@ -54,12 +64,12 @@ export const initWebsocket = (FirstMsg) => {
     console.log(
       `Socket onclose due to ${CryptoDotComErrorCode[event.code] ? CryptoDotComErrorCode[event.code] : event.reason}! Reconnecting...`
     )
-    initWebsocket(FirstMsg)
+    initWebsocket(firstMsg)
   }
   // By Crypto.com doc
   // We recommend adding a 1-second sleep after establishing the websocket connection, and before requests are sent.
   setTimeout(() => {
-    sendSocketMessage(FirstMsg)
+    sendSocketMessage(firstMsg)
   }, 1000)
 }
 export const sendSocketMessage = (msg) => {
