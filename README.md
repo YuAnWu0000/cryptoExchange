@@ -28,6 +28,16 @@ yarn dev
 yarn build
 ```
 
+## Serve
+
+```sh
+npm install -g serve
+```
+
+```sh
+serve -s dist
+```
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
