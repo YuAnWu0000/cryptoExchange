@@ -1,16 +1,20 @@
 <template>
-  <OrderBook symbol="BTCUSD-PERP" />
-  <OrderBook symbol="ETHUSD-PERP" />
+  <OrderBook v-for="(item, index) in symbolList" :key="`orderBook${index}`" :symbol="item" />
 </template>
 
 <script setup>
 import { initWebsocket } from '@/utils/ws'
+import { storeToRefs } from 'pinia'
+import { useOrderBookStore } from '@/stores/orderBook'
 import OrderBook from './components/OrderBook.vue'
+const orderBookStore = useOrderBookStore()
+const { symbolList, requestNum } = storeToRefs(orderBookStore)
+// subscribe to order book
 initWebsocket({
-  id: 5566,
+  id: 1,
   method: 'subscribe',
   params: {
-    channels: ['book.BTCUSD-PERP.10', 'book.ETHUSD-PERP.10']
+    channels: symbolList.value.map((item) => `book.${item}.${requestNum.value}`)
   },
   nonce: 1654784123465
 })
@@ -21,7 +25,8 @@ initWebsocket({
   width: 100%;
   padding: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
   font-size: 1.6rem;
 }
 </style>
