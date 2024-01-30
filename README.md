@@ -1,6 +1,6 @@
 # cryptoExchange
 
-Order book function in crypto exchange (integrate crypto.com API by websocket.)
+Implement real-time order book and candlestick charts like a crypto exchange (integrate crypto.com API by using websocket.)
 
 ## Recommended IDE Setup
 
@@ -22,13 +22,19 @@ yarn
 yarn dev
 ```
 
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+yarn lint
+```
+
 ### Compile and Minify for Production
 
 ```sh
 yarn build
 ```
 
-## Serve
+### Serve dist
 
 ```sh
 npm install -g serve
@@ -36,10 +42,4 @@ npm install -g serve
 
 ```sh
 serve -s dist
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
 ```
