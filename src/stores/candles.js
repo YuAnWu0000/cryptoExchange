@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useCandleStore = defineStore('candle', {
   state: () => ({
     symbol: 'BTCUSD-PERP',
-    timeFrame: '1m', // 50 by default
+    timeFrame: '1m',
     candles: []
   }),
   actions: {
@@ -18,7 +18,7 @@ export const useCandleStore = defineStore('candle', {
       else this.candles = this.candles.concat(candles)
     },
     setTimeFrame(timeFrame) {
-      if (!(timeFrame in timeFrameMap)) {
+      if (!(timeFrame in TIME_FRAME_MAP)) {
         console.log('Set timeframe error: ', timeFrame)
         return
       }
@@ -26,7 +26,7 @@ export const useCandleStore = defineStore('candle', {
     }
   }
 })
-const timeFrameMap = {
+const TIME_FRAME_MAP = {
   '1m': 'one minute. (Legacy format: M1)',
   '5m': 'five minutes. (Legacy format: M5)',
   '15m': '15 minutes. (Legacy format: M15)',

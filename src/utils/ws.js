@@ -17,7 +17,7 @@ export const initWebsocket = (firstMsg) => {
     if (data.code !== 0) {
       console.log(
         'Crypto.com expected error: ',
-        CryptoDotComErrorCode[data.code] ? CryptoDotComErrorCode[data.code] : data.message
+        CRYPTO_DOT_COM_ERROR_CODE[data.code] ? CRYPTO_DOT_COM_ERROR_CODE[data.code] : data.message
       )
       return
     }
@@ -62,7 +62,7 @@ export const initWebsocket = (firstMsg) => {
   }
   socket.onclose = (event) => {
     console.log(
-      `Socket onclose due to ${CryptoDotComErrorCode[event.code] ? CryptoDotComErrorCode[event.code] : event.reason}! Reconnecting...`
+      `Socket onclose due to ${CRYPTO_DOT_COM_ERROR_CODE[event.code] ? CRYPTO_DOT_COM_ERROR_CODE[event.code] : event.reason}! Reconnecting...`
     )
     initWebsocket(firstMsg)
   }
@@ -73,18 +73,18 @@ export const initWebsocket = (firstMsg) => {
   }, 1000)
 }
 export const sendSocketMessage = (msg) => {
-  if (socket.readyState === socketReadyStateEnum.OPEN) {
+  if (socket.readyState === SOCKET_READY_STATE_ENUM.OPEN) {
     socket.send(JSON.stringify(msg))
     console.log('message sent: ', JSON.stringify(msg))
   }
 }
-const socketReadyStateEnum = {
+const SOCKET_READY_STATE_ENUM = {
   CONNECTING: 0, // 'Socket has been created. The connection is not yet open.'
   OPEN: 1, // 'The connection is open and ready to communicate.'
   CLOSING: 2, // 'The connection is in the process of closing.'
   CLOSED: 3 // "The connection is closed or couldn't be opened."
 }
-const CryptoDotComErrorCode = {
+const CRYPTO_DOT_COM_ERROR_CODE = {
   1000: "Normal disconnection by server, usually when the heartbeat isn't handled properly",
   1006: 'Abnormal disconnection',
   1013: 'Server restarting -- try again later'
