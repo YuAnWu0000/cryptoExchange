@@ -52,14 +52,17 @@ onMounted(() => {
       vertLine: { color: 'rgba(255,255,255,0.5)' },
       horzLine: { color: 'rgba(255,255,255,0.5)' }
     },
+    // Background lines
     grid: {
       vertLines: { visible: false },
       horzLines: { color: 'rgba(255,255,255,0.1)' }
     },
+    // X-AXIS
     timeScale: {
       borderColor: 'rgba(255,255,255,0.3)',
       timeVisible: true
     },
+    // Y-AXIS
     rightPriceScale: {
       borderColor: 'rgba(255,255,255,0.3)'
     },
@@ -81,14 +84,21 @@ onMounted(() => {
   // set legend after moving to another candle
   chart.subscribeCrosshairMove((param) => {
     try {
-      // console.log(param.seriesData.values().next().value)
       if (!param.time) return
-      const data = param.seriesData?.values()?.next()?.value
+      const data = param.seriesData.values().next().value
       const { open, high, low, close } = data
       legend.value = { high, low, open, close }
     } catch (err) {
       // console.log(err)
     }
+  })
+
+  // resize event
+  window.addEventListener('resize', () => {
+    chart.applyOptions({
+      width: candleChartEl.value.clientWidth,
+      height: candleChartEl.value.clientHeight
+    })
   })
 
   chart.timeScale().fitContent()
@@ -113,10 +123,16 @@ watch(
   .legend {
     font-size: 1.6rem;
     color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 1rem;
   }
   .chart {
     width: 100%;
     height: 40rem;
+  }
+  @media screen and (max-width: 750px) {
+    .legend {
+      font-size: 1.2rem;
+    }
   }
 }
 </style>

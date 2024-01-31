@@ -2,13 +2,7 @@
 
 Implement real-time order book and candlestick charts like a crypto exchange (integrate crypto.com API by using websocket.)
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+See [Crypto.com API doc](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html#book-instrument_name).
 
 ## Project Setup
 

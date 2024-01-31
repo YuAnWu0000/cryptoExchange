@@ -58,5 +58,11 @@ const bids = computed(() => orderBook.value.get(props.symbol)?.bids)
     justify-content: space-between;
     align-items: center;
   }
+  @media screen and (max-width: 450px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 451px) and (max-width: 750px) {
+    width: 50%;
+  }
 }
 </style>
