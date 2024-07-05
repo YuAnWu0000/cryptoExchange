@@ -1,6 +1,15 @@
 <template>
   <div class="candles">
-    <h1>{{ symbol }} {{ timeFrame }}</h1>
+    <h1>{{ symbol }}</h1>
+    <div class="time-frame">
+      <span
+        v-for="t in Object.keys(TIME_FRAME_MAP)"
+        :key="`timeFrame_${t}`"
+        :class="{ selected: timeFrame === t }"
+        @click="changeTimeFrame(t)"
+        >{{ t }}</span
+      >
+    </div>
     <div class="legend">
       high: {{ legend.high }}, low: {{ legend.low }}, open: {{ legend.open }}, close:
       {{ legend.close }}
@@ -10,14 +19,20 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, watchEffect } from 'vue'
 import { createChart, ColorType } from 'lightweight-charts'
 import { storeToRefs } from 'pinia'
-import { useCandleStore } from '@/stores/candles'
+import { useWebsocketStore } from '@/stores/ws'
+import { useCandleStore, TIME_FRAME_MAP } from '@/stores/candles'
+
+const props = defineProps(['symbol'])
+const websocketStore = useWebsocketStore()
 const candleStore = useCandleStore()
+const { candles } = storeToRefs(candleStore)
+console.log('render candles')
 
-const { symbol, timeFrame, candles } = storeToRefs(candleStore)
-
+const timeFrame = ref('1m')
+const lastSubscription = ref('')
 const candleChartEl = ref(null)
 const candleList = computed(() =>
   candles.value.map((item) => ({
@@ -37,8 +52,12 @@ const legend = ref({
   close: 'XXX'
 })
 
-let chart, candlestickSeries
 onMounted(() => {
+  drawCharts()
+})
+
+let chart, candlestickSeries
+function drawCharts() {
   chart = createChart(candleChartEl.value, {
     layout: {
       background: { type: ColorType.Solid, color: '#161a1e' },
@@ -102,7 +121,13 @@ onMounted(() => {
   })
 
   chart.timeScale().fitContent()
-})
+}
+
+function changeTimeFrame(t) {
+  candleStore.setCandles([])
+  timeFrame.value = t
+}
+
 watch(
   candleList,
   () => {
@@ -113,6 +138,83 @@ watch(
     immediate: true
   }
 )
+// timeFrame, props.symbol改變則重新訂閱
+// watchEffect(() => {
+//   console.log('watch effect')
+//   // 若先前有訂閱則先取消訂閱
+//   if (lastSubscription.value)
+//     websocketStore.sendSocketMessage({
+//       id: 1,
+//       method: 'unsubscribe',
+//       params: {
+//         channels: [lastSubscription.value]
+//       },
+//       nonce: 1654784123465
+//     })
+//   const subscirption = `candlestick.${timeFrame.value}.${props.symbol}`
+//   websocketStore.sendSocketMessage({
+//     id: 1,
+//     method: 'subscribe',
+//     params: {
+//       channels: [subscirption]
+//     },
+//     nonce: 1654784123465
+//   })
+//   lastSubscription.value = subscirption
+// })
+// // 不管 wsInstance 還是 isReady 改變都重新訂閱
+// websocketStore.$subscribe(() => {
+//   console.log('sub watch')
+//   // 若先前有訂閱則先取消訂閱
+//   if (lastSubscription.value)
+//     websocketStore.sendSocketMessage({
+//       id: 1,
+//       method: 'unsubscribe',
+//       params: {
+//         channels: [lastSubscription.value]
+//       },
+//       nonce: 1654784123465
+//     })
+//   const subscirption = `candlestick.${timeFrame.value}.${props.symbol}`
+//   websocketStore.sendSocketMessage({
+//     id: 1,
+//     method: 'subscribe',
+//     params: {
+//       channels: [subscirption]
+//     },
+//     nonce: 1654784123465
+//   })
+//   lastSubscription.value = subscirption
+// })
+watch(
+  [timeFrame, () => props.symbol, websocketStore],
+  (newValue, oldValue) => {
+    // 若先前有訂閱則先取消訂閱
+    if (lastSubscription.value)
+      websocketStore.sendSocketMessage({
+        id: 1,
+        method: 'unsubscribe',
+        params: {
+          channels: [lastSubscription.value]
+        },
+        nonce: 1654784123465
+      })
+    const subscirption = `candlestick.${timeFrame.value}.${props.symbol}`
+    websocketStore.sendSocketMessage({
+      id: 1,
+      method: 'subscribe',
+      params: {
+        channels: [subscirption]
+      },
+      nonce: 1654784123465
+    })
+    lastSubscription.value = subscirption
+  },
+  {
+    immediate: false,
+    deep: true
+  }
+)
 </script>
 
 <style scoped lang="scss">
@@ -120,6 +222,22 @@ watch(
   width: 90%;
   height: 50rem;
   margin: 2rem 0;
+  h1 {
+    display: inline-block;
+  }
+  .time-frame {
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: medium;
+    span {
+      margin: 0 1rem;
+      cursor: pointer;
+    }
+    .selected {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
   .legend {
     font-size: 1.6rem;
     color: rgba(255, 255, 255, 0.6);

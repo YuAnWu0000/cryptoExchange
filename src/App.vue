@@ -1,26 +1,26 @@
 <template>
-  <Candles />
+  <Candles symbol="BTCUSD-PERP" />
   <div class="order-books-wrapper">
     <OrderBook v-for="(item, index) in symbolList" :key="`orderBook${index}`" :symbol="item" />
   </div>
 </template>
 
 <script setup>
-import { initWebsocket } from '@/utils/ws'
+// import { initWebsocket } from '@/utils/ws'
 import { storeToRefs } from 'pinia'
+import { useWebsocketStore } from '@/stores/ws'
 import { useOrderBookStore } from '@/stores/orderBook'
 import Candles from '@/components/Candles.vue'
 import OrderBook from '@/components/OrderBook.vue'
+const websocketStore = useWebsocketStore()
 const orderBookStore = useOrderBookStore()
 const { symbolList, requestNum } = storeToRefs(orderBookStore)
 // subscribe to order book
-initWebsocket({
+websocketStore.initWebsocket({
   id: 1,
   method: 'subscribe',
   params: {
-    channels: symbolList.value
-      .map((item) => `book.${item}.${requestNum.value}`)
-      .concat('candlestick.1m.BTCUSD-PERP')
+    channels: symbolList.value.map((item) => `book.${item}.${requestNum.value}`)
   },
   nonce: 1654784123465
 })
