@@ -2,13 +2,10 @@ import { defineStore } from 'pinia'
 
 export const useCandleStore = defineStore('candle', {
   state: () => ({
-    symbol: 'BTCUSD-PERP',
-    timeFrame: '1m',
     candles: []
   }),
   actions: {
-    setCandles(symbol, candles) {
-      this.symbol = symbol
+    setCandles(candles) {
       this.candles = candles
     },
     updateCandles(candles) {
@@ -16,17 +13,10 @@ export const useCandleStore = defineStore('candle', {
       if (len > 0 && this.candles[len - 1]['t'] === candles[0]['t'])
         this.candles[len - 1] = candles[0]
       else this.candles = this.candles.concat(candles)
-    },
-    setTimeFrame(timeFrame) {
-      if (!(timeFrame in TIME_FRAME_MAP)) {
-        console.log('Set timeframe error: ', timeFrame)
-        return
-      }
-      this.timeFrame = timeFrame
     }
   }
 })
-const TIME_FRAME_MAP = {
+export const TIME_FRAME_MAP = {
   '1m': 'one minute. (Legacy format: M1)',
   '5m': 'five minutes. (Legacy format: M5)',
   '15m': '15 minutes. (Legacy format: M15)',
