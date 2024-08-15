@@ -25,8 +25,8 @@ sequenceDiagram
   Web Client->>+ Web Client: Proceed
   Note over Web Client: Check if method = 'public/heartbeat'
   Web Client->>+ Crypto.com: Send message { id, method: 'public/respond-heartbeat' }
-  Note over Web Client: Check if id = -1 and result != null
-  Web Client->>+ Web Client: Update store state by pinia
+  Note over Web Client: Check if id = -1 (updated) and result != null
+  Web Client->>+ Web Client: Store result.data by pinia
   Web Client->>+ User: Re-render component
   end
   opt socket.onclose = () => {}
