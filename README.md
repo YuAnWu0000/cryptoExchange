@@ -36,7 +36,7 @@ sequenceDiagram
   User->>+ Web Client: Click timeframe option
   Web Client->>+ Crypto.com: Send message { id: 2, method: 'unsubscribe', params: { channels: ['candlestick.1m.BTCUSD-PERP'] } }
   Web Client->>+ Crypto.com: Send message { id: 2, method: 'subscribe', params: { channels: ['candlestick.5m.BTCUSD-PERP'] } }
-
+  Web Client->>+ User: Re-render component
   end
 ```
 
