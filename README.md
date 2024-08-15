@@ -6,6 +6,16 @@ Implement real-time order book and candlestick charts like a crypto exchange (in
 
 See Crypto.com API doc [here](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html#book-instrument_name).
 
+## Websocket Flow
+
+```mermaid
+sequenceDiagram
+  actor User
+  participant Web Client
+  participant Crypto.com
+
+```
+
 ## Project Setup
 
 ```sh
