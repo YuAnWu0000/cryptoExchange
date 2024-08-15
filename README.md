@@ -32,6 +32,8 @@ sequenceDiagram
   opt socket.onclose = () => {}
   Web Client->>+ Crypto.com: Reconnect websocket
   end
+  opt Switch Timeframe
+  end
 ```
 
 ## Project Setup
