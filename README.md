@@ -20,6 +20,8 @@ sequenceDiagram
   Web Client->>+ Crypto.com: Send message { id: 2, method: 'subscribe', params: { channels: ['candlestick.1m.BTCUSD-PERP'] } }
   end
   opt socket.onmessage = () => {}
+  Crypto.com->>+ Web Client: Send message { code, id, method, channel?, result?}
+
   end
 ```
 
