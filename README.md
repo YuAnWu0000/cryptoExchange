@@ -25,6 +25,7 @@ sequenceDiagram
   Web Client->>+ Web Client: Proceed
   Note over Web Client: Check if method = 'public/heartbeat'
   Web Client->>+ Crypto.com: Send message { id, method: 'public/respond-heartbeat' }
+  Note over Web Client: Check if id = -1 and result != null
 
   end
 ```
