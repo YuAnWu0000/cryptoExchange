@@ -28,7 +28,9 @@ sequenceDiagram
   Note over Web Client: Check if id = -1 and result != null
   Web Client->>+ Web Client: Update store state by pinia
   Web Client->>+ User: Re-render component
-
+  end
+  opt socket.onclose = () => {}
+  Web Client->>+ Crypto.com: Reconnect websocket
   end
 ```
 
