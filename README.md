@@ -27,6 +27,7 @@ sequenceDiagram
   Web Client->>+ Crypto.com: Send message { id, method: 'public/respond-heartbeat' }
   Note over Web Client: Check if id = -1 and result != null
   Web Client->>+ Web Client: Update store state by pinia
+  Web Client->>+ User: Re-render component
 
   end
 ```
