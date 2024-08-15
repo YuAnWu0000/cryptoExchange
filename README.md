@@ -33,6 +33,8 @@ sequenceDiagram
   Web Client->>+ Crypto.com: Reconnect websocket
   end
   opt Switch Timeframe
+  User->>+ Web Client: Click timeframe option
+
   end
 ```
 
