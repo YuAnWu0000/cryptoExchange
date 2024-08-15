@@ -21,6 +21,7 @@ sequenceDiagram
   end
   opt socket.onmessage = () => {}
   Crypto.com->>+ Web Client: Send message { code, id, method, channel?, result?}
+  Note over Web Client: Check if code = 0 (success)
 
   end
 ```
