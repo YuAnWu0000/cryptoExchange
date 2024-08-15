@@ -15,6 +15,7 @@ sequenceDiagram
   participant Crypto.com
   User ->>+ Web Client: Enter page
   Web Client ->>+ Crypto.com: Establish websocket connection
+  opt socket.onopen = () => {}
 
 ```
 
