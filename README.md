@@ -16,7 +16,8 @@ sequenceDiagram
   User ->>+ Web Client: Enter page
   Web Client ->>+ Crypto.com: Establish websocket connection
   opt socket.onopen = () => {}
-  Web Client ->>+ Crypto.com: Send message
+  Web Client->>+ Crypto.com: Send message { id: 1, method: 'subscribe', params: { channels: ['book.BTCUSD-PERP.10'] } }
+  Web Client->>+ Crypto.com: Send message { id: 2, method: 'subscribe', params: { channels: ['candlestick.1m.BTCUSD-PERP'] } }
   end
 ```
 
