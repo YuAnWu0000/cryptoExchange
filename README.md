@@ -13,7 +13,7 @@ sequenceDiagram
   actor User
   participant Web Client
   participant Crypto.com
-
+  User ->>+ Web Client: Enter page
 ```
 
 ## Project Setup
