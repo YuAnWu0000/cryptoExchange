@@ -1,5 +1,5 @@
 <template>
-  <Candles symbol="BTCUSD-PERP" />
+  <Candles symbol="ETHUSD-PERP" />
   <div class="order-books-wrapper">
     <OrderBook v-for="(item, index) in symbolList" :key="`orderBook${index}`" :symbol="item" />
   </div>
