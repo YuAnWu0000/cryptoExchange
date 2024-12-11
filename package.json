@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "cypress": "cypress open"
+    "e2e": "cypress open"
   },
   "dependencies": {
     "lightweight-charts": "^4.1.2",

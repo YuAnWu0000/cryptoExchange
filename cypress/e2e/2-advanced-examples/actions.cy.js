@@ -36,16 +36,20 @@ context('Actions', () => {
   it('.focus() - focus on a DOM element', () => {
     // https://on.cypress.io/focus
     cy.get('.action-focus').focus()
-    cy.get('.action-focus').should('have.class', 'focus')
-      .prev().should('have.attr', 'style', 'color: orange;')
+    cy.get('.action-focus')
+      .should('have.class', 'focus')
+      .prev()
+      .should('have.attr', 'style', 'color: orange;')
   })
 
   it('.blur() - blur off a DOM element', () => {
     // https://on.cypress.io/blur
     cy.get('.action-blur').type('About to blur')
     cy.get('.action-blur').blur()
-    cy.get('.action-blur').should('have.class', 'error')
-      .prev().should('have.attr', 'style', 'color: red;')
+    cy.get('.action-blur')
+      .should('have.class', 'error')
+      .prev()
+      .should('have.attr', 'style', 'color: red;')
   })
 
   it('.clear() - clears an input or textarea element', () => {
@@ -58,8 +62,7 @@ context('Actions', () => {
 
   it('.submit() - submit a form', () => {
     // https://on.cypress.io/submit
-    cy.get('.action-form')
-      .find('[type="text"]').type('HALFOFF')
+    cy.get('.action-form').find('[type="text"]').type('HALFOFF')
 
     cy.get('.action-form').submit()
     cy.get('.action-form').next().should('contain', 'Your form has been submitted!')
@@ -165,30 +168,19 @@ context('Actions', () => {
 
     // By default, .uncheck() will uncheck all matching
     // checkbox elements in succession, one after another
-    cy.get('.action-check [type="checkbox"]')
-      .not('[disabled]')
-      .uncheck()
-    cy.get('.action-check [type="checkbox"]')
-      .not('[disabled]')
-      .should('not.be.checked')
+    cy.get('.action-check [type="checkbox"]').not('[disabled]').uncheck()
+    cy.get('.action-check [type="checkbox"]').not('[disabled]').should('not.be.checked')
 
     // .uncheck() accepts a value argument
-    cy.get('.action-check [type="checkbox"]')
-      .check('checkbox1')
-    cy.get('.action-check [type="checkbox"]')
-      .uncheck('checkbox1')
-    cy.get('.action-check [type="checkbox"][value="checkbox1"]')
-      .should('not.be.checked')
+    cy.get('.action-check [type="checkbox"]').check('checkbox1')
+    cy.get('.action-check [type="checkbox"]').uncheck('checkbox1')
+    cy.get('.action-check [type="checkbox"][value="checkbox1"]').should('not.be.checked')
 
     // .uncheck() accepts an array of values
-    cy.get('.action-check [type="checkbox"]')
-      .check(['checkbox1', 'checkbox3'])
-    cy.get('.action-check [type="checkbox"]')
-      .uncheck(['checkbox1', 'checkbox3'])
-    cy.get('.action-check [type="checkbox"][value="checkbox1"]')
-      .should('not.be.checked')
-    cy.get('.action-check [type="checkbox"][value="checkbox3"]')
-      .should('not.be.checked')
+    cy.get('.action-check [type="checkbox"]').check(['checkbox1', 'checkbox3'])
+    cy.get('.action-check [type="checkbox"]').uncheck(['checkbox1', 'checkbox3'])
+    cy.get('.action-check [type="checkbox"][value="checkbox1"]').should('not.be.checked')
+    cy.get('.action-check [type="checkbox"][value="checkbox3"]').should('not.be.checked')
 
     // Ignore error checking prior to unchecking
     cy.get('.action-check [disabled]').uncheck({ force: true })
@@ -199,8 +191,7 @@ context('Actions', () => {
     // https://on.cypress.io/select
 
     // at first, no option should be selected
-    cy.get('.action-select')
-      .should('have.value', '--Select a fruit--')
+    cy.get('.action-select').should('have.value', '--Select a fruit--')
 
     // Select option(s) with matching text content
     cy.get('.action-select').select('apples')
@@ -208,8 +199,7 @@ context('Actions', () => {
     // note that each value starts with "fr-" in our HTML
     cy.get('.action-select').should('have.value', 'fr-apples')
 
-    cy.get('.action-select-multiple')
-      .select(['apples', 'oranges', 'bananas'])
+    cy.get('.action-select-multiple').select(['apples', 'oranges', 'bananas'])
     cy.get('.action-select-multiple')
       // when getting multiple values, invoke "val" method first
       .invoke('val')
@@ -221,15 +211,13 @@ context('Actions', () => {
       // can attach an assertion right away to the element
       .should('have.value', 'fr-bananas')
 
-    cy.get('.action-select-multiple')
-      .select(['fr-apples', 'fr-oranges', 'fr-bananas'])
+    cy.get('.action-select-multiple').select(['fr-apples', 'fr-oranges', 'fr-bananas'])
     cy.get('.action-select-multiple')
       .invoke('val')
       .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas'])
 
     // assert the selected values include oranges
-    cy.get('.action-select-multiple')
-      .invoke('val').should('include', 'fr-oranges')
+    cy.get('.action-select-multiple').invoke('val').should('include', 'fr-oranges')
   })
 
   it('.scrollIntoView() - scroll an element into view', () => {
@@ -239,29 +227,23 @@ context('Actions', () => {
     // because they're not within
     // the viewable area of their parent
     // (we need to scroll to see them)
-    cy.get('#scroll-horizontal button')
-      .should('not.be.visible')
+    cy.get('#scroll-horizontal button').should('not.be.visible')
 
     // scroll the button into view, as if the user had scrolled
     cy.get('#scroll-horizontal button').scrollIntoView()
-    cy.get('#scroll-horizontal button')
-      .should('be.visible')
+    cy.get('#scroll-horizontal button').should('be.visible')
 
-    cy.get('#scroll-vertical button')
-      .should('not.be.visible')
+    cy.get('#scroll-vertical button').should('not.be.visible')
 
     // Cypress handles the scroll direction needed
     cy.get('#scroll-vertical button').scrollIntoView()
-    cy.get('#scroll-vertical button')
-      .should('be.visible')
+    cy.get('#scroll-vertical button').should('be.visible')
 
-    cy.get('#scroll-both button')
-      .should('not.be.visible')
+    cy.get('#scroll-both button').should('not.be.visible')
 
     // Cypress knows to scroll to the right and down
     cy.get('#scroll-both button').scrollIntoView()
-    cy.get('#scroll-both button')
-      .should('be.visible')
+    cy.get('#scroll-both button').should('be.visible')
   })
 
   it('.trigger() - trigger an event on a DOM element', () => {
@@ -273,13 +255,9 @@ context('Actions', () => {
 
     // Here, we invoke jQuery's val() method to set
     // the value and trigger the 'change' event
-    cy.get('.trigger-input-range')
-      .invoke('val', 25)
-    cy.get('.trigger-input-range')
-      .trigger('change')
-    cy.get('.trigger-input-range')
-      .get('input[type=range]').siblings('p')
-      .should('have.text', '25')
+    cy.get('.trigger-input-range').invoke('val', 25)
+    cy.get('.trigger-input-range').trigger('change')
+    cy.get('.trigger-input-range').get('input[type=range]').siblings('p').should('have.text', '25')
   })
 
   it('cy.scrollTo() - scroll the window or element to a position', () => {
