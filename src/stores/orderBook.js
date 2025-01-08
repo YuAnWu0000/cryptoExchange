@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useOrderBookStore = defineStore('orderBook', {
   state: () => ({
-    symbolList: ['BTCUSD-PERP', 'ETHUSD-PERP', 'SUI_USDT', 'XRP_USDT', 'FIL_USDT', 'NEAR_USDT'],
+    symbolList: ['BTCUSD-PERP', 'ETHUSD-PERP', 'XRP_USDT', 'SOL_USDT', 'SUI_USDT', 'FIL_USDT'],
     requestNum: 10, // 50 by default
     orderBook: new Map(),
     displayNum: 5
