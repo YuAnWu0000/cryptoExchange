@@ -1,9 +1,9 @@
 {
-  "name": "cryptoexchange",
-  "version": "0.0.0",
+  "name": "cryptoExchange",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
-  "homepage": "https://YuAnWu0000.github.io/cryptoExchange",
+  "homepage": "https://yuanwu0000.github.io/cryptoExchange",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
