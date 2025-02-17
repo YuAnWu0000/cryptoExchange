@@ -46,10 +46,10 @@ const candleList = computed(() =>
 )
 
 const legend = ref({
-  high: 'XXX',
-  low: 'XXX',
-  open: 'XXX',
-  close: 'XXX'
+  high: 'XXXX',
+  low: 'XXXX',
+  open: 'XXXX',
+  close: 'XXXX'
 })
 
 onMounted(() => {
