@@ -10,6 +10,12 @@ See Crypto.com API doc [here](https://exchange-docs.crypto.com/exchange/v1/rest-
 
 ## Tech Stack
 
+Frontend Framework: **vue 3**<br>
+CSS Framework: **scss**<br>
+UI Library: **lightweight charts**<br>
+State Management: **pinia**<br>
+Build Tool: **vite**<br>
+
 ## Websocket Flow Chart
 
 ```mermaid
