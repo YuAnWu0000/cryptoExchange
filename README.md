@@ -75,7 +75,7 @@ sequenceDiagram
   end
 ```
 
-## Project Setup Commands
+## Setup Commands
 
 ### Install Dependencies
 
