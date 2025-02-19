@@ -10,11 +10,15 @@ See Crypto.com API doc [here](https://exchange-docs.crypto.com/exchange/v1/rest-
 
 ## Tech Stack
 
-Frontend Framework: **vue 3**<br>
-CSS Framework: **scss**<br>
-UI Library: **lightweight charts**<br>
-State Management: **pinia**<br>
-Build Tool: **vite**<br>
+#### Frontend Framework: `vue 3`<br>
+
+#### CSS Preprocessor: `scss`<br>
+
+#### UI Library: `lightweight-charts`<br>
+
+#### State Management: `pinia`<br>
+
+#### Build Tool: `vite`<br>
 
 ## Project Structure
 
@@ -71,7 +75,9 @@ sequenceDiagram
   end
 ```
 
-## Project Setup
+## Project Setup Commands
+
+### Install Dependencies
 
 ```sh
 npm install
@@ -95,7 +101,7 @@ npm run lint
 npm run build
 ```
 
-### Deploy to Github page
+### Deploy to Github Page
 
 ```sh
 npm run deploy
