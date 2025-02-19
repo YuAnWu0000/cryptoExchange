@@ -8,17 +8,17 @@
 
 ## Tech Stack
 
-Frontend Framework: `vue 3`<br>
+**Frontend Framework:** `vue 3`<br>
 
-CSS Preprocessor: `scss`<br>
+**CSS Preprocessor:** `scss`<br>
 
-UI Library: `lightweight-charts`<br>
+**UI Library:** `lightweight-charts`<br>
 
-State Management: `pinia`<br>
+**State Management:** `pinia`<br>
 
-Build Tool: `vite`<br>
+**Build Tool:** `vite`<br>
 
-WebSocket API source: [Crypto.com](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html#book-instrument_name)
+**WebSocket API source:** [Crypto.com](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html#book-instrument_name)
 
 ## Directory Structure
 
