@@ -20,7 +20,7 @@ See Crypto.com API doc [here](https://exchange-docs.crypto.com/exchange/v1/rest-
 
 #### Build Tool: `vite`<br>
 
-## Project Structure
+## Directory Structure
 
 ```
 ├── src
