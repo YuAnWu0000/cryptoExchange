@@ -1,20 +1,24 @@
 # cryptoExchange
 
+### Implement real-time order book and candlestick charts like a crypto exchange (integrate crypto.com API by using websocket.)
+
 ### https://yuanwu0000.github.io/cryptoExchange/
 
-Implement real-time order book and candlestick charts like a crypto exchange (integrate crypto.com API by using websocket.)
-
 [![Demo video](https://img.youtube.com/vi/Z-fJEUXQLNs/0.jpg)](https://www.youtube.com/watch?v=Z-fJEUXQLNs)
-
-See Crypto.com API doc [here](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html#book-instrument_name).
 
 ## Tech Stack
 
 Frontend Framework: `vue 3`<br>
+
 CSS Preprocessor: `scss`<br>
+
 UI Library: `lightweight-charts`<br>
+
 State Management: `pinia`<br>
+
 Build Tool: `vite`<br>
+
+WebSocket API source: [Crypto.com](https://exchange-docs.crypto.com/exchange/v1/rest-ws/index.html#book-instrument_name)
 
 ## Directory Structure
 
