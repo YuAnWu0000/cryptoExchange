@@ -1,4 +1,4 @@
-# cryptoExchange
+# Crypto Exchange
 
 ### Implement real-time order book and candlestick charts like a crypto exchange (integrate crypto.com API by using websocket.)
 
