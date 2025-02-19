@@ -16,6 +16,29 @@ UI Library: **lightweight charts**<br>
 State Management: **pinia**<br>
 Build Tool: **vite**<br>
 
+## Project structure
+
+```
+│  App.vue
+│  main.js
+│
+├─assets
+│      logo.svg
+│      main.css
+│
+├─components
+│      Candles.vue
+│      OrderBook.vue
+│
+├─stores
+│      candles.js
+│      orderBook.js
+│      ws.js
+│
+└─utils
+        ws.js
+```
+
 ## Websocket Flow Chart
 
 ```mermaid
