@@ -41,7 +41,7 @@
 |    │   ws.js
 ```
 
-## Websocket Flow Chart
+## WebSocket Flow Chart
 
 ```mermaid
 sequenceDiagram
@@ -75,7 +75,7 @@ sequenceDiagram
   end
 ```
 
-## Setup Commands
+## Commands
 
 ### Install Dependencies
 
