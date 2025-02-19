@@ -2,7 +2,7 @@
 
 ### Implement real-time order book and candlestick charts like a crypto exchange.
 
-### https://yuanwu0000.github.io/cryptoExchange/
+#### https://yuanwu0000.github.io/cryptoExchange/
 
 [![Demo video](https://img.youtube.com/vi/Z-fJEUXQLNs/0.jpg)](https://www.youtube.com/watch?v=Z-fJEUXQLNs)
 
