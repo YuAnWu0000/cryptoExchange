@@ -74,28 +74,34 @@ sequenceDiagram
 ## Project Setup
 
 ```sh
-yarn
+npm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-yarn dev
+npm run dev
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
-yarn lint
+npm run lint
 ```
 
 ### Compile and Minify for Production
 
 ```sh
-yarn build
+npm run build
 ```
 
-### Serve dist
+### Deploy to Github page
+
+```sh
+npm run deploy
+```
+
+### Serve dist locally
 
 ```sh
 npm install -g serve
